@@ -1,9 +1,9 @@
 import requests
 import asyncio
 from models import Item
-from settings import settings
+from app.settings import settings
 
-headers = settings.PARSER_HEADERS
+headers: str = settings.PARSER_HEADERS
 
 
 class ItemParse:
@@ -15,7 +15,9 @@ class ItemParse:
         """Takes article and basket_number(for iterator) and returns url string"""
         vol: str = f"vol{self.article[:4]}"
         part: str = f"part{self.article[:6]}"
-        url: str = f"https://basket-{basket_number}.wbbasket.ru/{vol}/{part}/{self.article}/info/ru/card.json"
+        url: str = (
+            f"https://basket-{basket_number}.wbbasket.ru/{vol}/{part}/{self.article}/info/ru/card.json"
+        )
         return url
 
     async def get_by_article(self) -> Item:
