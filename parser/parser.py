@@ -7,6 +7,8 @@ headers: str = settings.PARSER_HEADERS
 
 
 class ItemParse:
+    """Takes an article and parse wb backend"""
+
     def __init__(self, article: str, headers: dict) -> None:
         self.article = article
         self.headers = headers
@@ -27,8 +29,8 @@ class ItemParse:
             response = requests.get(url=url, headers=self.headers)
             if response.status_code == 200:
                 result = Item.model_validate(response.json())
-                print(result)
-                break
+                return result
+        return None
 
 
-asyncio.run(ItemParse("277990507", headers).get_by_article())
+# asyncio.run(ItemParse("277990507", headers).get_by_article())
