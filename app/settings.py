@@ -15,6 +15,7 @@ class Settings:
         "sec-ch-ua-mobile": "?0",
         "sec-ch-ua-platform": "macOS",
     }
+    API_ROUTER_PREFIX = "/api/v1"
 
 
 settings = Settings()

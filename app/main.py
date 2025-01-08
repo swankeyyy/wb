@@ -1,5 +1,6 @@
-from fastapi import FastAPI
-
+from typing import Optional
+from fastapi import FastAPI, Header
+from api import router
 import uvicorn
 
 app = FastAPI(
@@ -14,9 +15,13 @@ app = FastAPI(
 
 
 @app.get("/")
-async def index():
+async def index(tst: Optional[str] = Header(None)):
+    if tst:
+        return tst
     return "hello Kitty"
 
+
+app.include_router(router)
 
 if __name__ == "__main__":
     uvicorn.run("main:app", reload=True)
