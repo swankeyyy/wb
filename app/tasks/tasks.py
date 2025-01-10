@@ -1,4 +1,4 @@
-from celery_config import celery_app
+from app.tasks.celery_config import celery_app
 from app.parser.parser import ItemParse
 from app.settings import settings
 import asyncio
