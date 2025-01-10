@@ -1,6 +1,6 @@
 import requests
 import asyncio
-from models import Item
+from app.parser.models import Item
 from app.settings import settings
 
 headers: str = settings.PARSER_HEADERS
@@ -9,7 +9,7 @@ headers: str = settings.PARSER_HEADERS
 class ItemParse:
     """Takes an article and parse wb backend"""
 
-    def __init__(self, article: str, headers: dict) -> None:
+    def __init__(self, article: str) -> None:
         self.article = article
         self.headers = headers
 
@@ -22,15 +22,16 @@ class ItemParse:
         )
         return url
 
-    async def get_by_article(self) -> Item:
+    def get_by_article(self) -> Item:
         """Takes article and search content by basket_numbers"""
         for basket_number in range(10, 20):
             url: str = self.__prepare_url(basket_number)
             response = requests.get(url=url, headers=self.headers)
             if response.status_code == 200:
                 result = Item.model_validate(response.json())
-                return result
+                print(result)
+                return result.model_dump()
         return None
 
 
-# asyncio.run(ItemParse("277990507", headers).get_by_article())
+# asyncio.run(ItemParse("277990507").get_by_article())
